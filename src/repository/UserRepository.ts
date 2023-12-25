@@ -1,4 +1,6 @@
 import db from "../config/connectDb"
+import bcrypt from "bcrypt";
+import env from "../config/LoacEnv";
 
 export const createUser = async (
     idInput: number,
@@ -11,7 +13,7 @@ export const createUser = async (
             id: idInput,
             username: usernameInput,
             email: emailInput,
-            password: passwordInput,
+            password: bcrypt.hashSync(passwordInput, env.HASH_SALT),
         }
     })
 }
