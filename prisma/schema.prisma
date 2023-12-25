@@ -15,7 +15,7 @@ model User {
   createdAt                 DateTime              @default(now()) @map("created_at")
 
   // references (prisma level only)
-  userToRecipe              Recipe[]                @relation("ReferUserToRecipe")
+  userToRecipe              Recipe[]              @relation("ReferUserToRecipe")
 
   @@map("Users")
 }
@@ -44,7 +44,7 @@ model Ingredient {
   ingredient20              String?               @map("ingredient_20")
 
   // references (prisma level only)
-  ingredientToRecipe        Recipe[]                @relation("ReferIngredientToRecipe")
+  ingredientToRecipe        Recipe[]              @relation("ReferIngredientToRecipe")
 
   @@map("Ingredients")
 }
@@ -73,7 +73,7 @@ model Measure {
   measure20                 String?               @map("measure_20")
 
   // references (prisma level only)
-  measureToRecipe           Recipe[]                @relation("ReferMeasureToRecipe")
+  measureToRecipe           Recipe[]              @relation("ReferMeasureToRecipe")
 
   @@map("Measures")
 }
@@ -102,7 +102,7 @@ model Step {
   step20                    String?               @map("step_20")
 
   // references (prisma level only)
-  stepToRecipe              Recipe[]                @relation("ReferStepToRecipe")
+  stepToRecipe              Recipe[]              @relation("ReferStepToRecipe")
 
   @@map("Steps")
 }
@@ -123,10 +123,10 @@ model Recipe {
   createdAt                 DateTime              @default(now()) @map("created_at")
 
   // relational fields
-  recipeFromIngredient      Ingredient?            @relation("ReferIngredientToRecipe", fields: [ingredientId], references: [id])
-  recipeFromMeasure         Measure?               @relation("ReferMeasureToRecipe", fields: [measureId], references: [id])
-  recipeFromStep            Step?                  @relation("ReferStepToRecipe", fields: [stepId], references: [id])
-  recipeFromUser            User?                  @relation("ReferUserToRecipe", fields: [userId], references: [id])
+  recipeFromIngredient      Ingredient?           @relation("ReferIngredientToRecipe", fields: [ingredientId], references: [id])
+  recipeFromMeasure         Measure?              @relation("ReferMeasureToRecipe", fields: [measureId], references: [id])
+  recipeFromStep            Step?                 @relation("ReferStepToRecipe", fields: [stepId], references: [id])
+  recipeFromUser            User?                 @relation("ReferUserToRecipe", fields: [userId], references: [id])
 
   @@map("Recipes")
 }
