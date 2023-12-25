@@ -16,10 +16,10 @@ export const createUser = async (
     })
 }
 
-export const queryUserDetailbyID = async (id: number) => {
+export const queryUserDetailbyID = async (idInput: number) => {
     const data =  await db.user.findUnique({
         where: {
-            id: id
+            id: idInput
         }
     })
 

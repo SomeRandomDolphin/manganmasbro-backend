@@ -9,6 +9,7 @@ import path from "path"
 // import adminDashboard from "./router/AdminDashboardRouter"
 // import staffRecruitRouter from "./router/StaffRecruitRouter"
 import userRouter from "./router/UserRouter"
+import recipeRouter from "./router/RecipeRouter"
 
 const app: Express = express()
 const PORT = env.PORT || 80
@@ -22,7 +23,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 // app.use("/api/links", shortenerRouter)
 // app.use("/api/staff-recruitment", staffRecruitRouter)
 app.use("/api/users", userRouter)
-// app.use("/api/recipes", staffRecruitRouter)
+app.use("/api/recipes", recipeRouter)
 
 
 app.get("/api", (_: Request, res: Response) => {
