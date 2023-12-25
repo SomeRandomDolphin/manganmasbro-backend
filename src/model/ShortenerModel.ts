@@ -1,4 +1,4 @@
-export interface ShortenerRequest {
-	originalURL: string
-	shortURL: string
-}
+// export interface ShortenerRequest {
+// 	originalURL: string
+// 	shortURL: string
+// }

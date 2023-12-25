@@ -1,4 +1,4 @@
-export interface changeStatusRequest {
-    nrp: string
-    statusDiterima: boolean
-}
+// export interface changeStatusRequest {
+//     nrp: string
+//     statusDiterima: boolean
+// }
