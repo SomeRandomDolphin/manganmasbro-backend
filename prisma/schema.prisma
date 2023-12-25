@@ -7,101 +7,156 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  id                        String                @id @default(uuid()) @db.Uuid
-  name                      String                @map("nama")
+model User {
+  id                        Int                   @id @default(autoincrement())
+  username                  String                
   email                     String                @unique
   password                  String
-  permission                AdminPermission       @map("admin_permission") @default(ADMIN)
-  divisiId                  Int?                  @unique @map("divisi_id")
   createdAt                 DateTime              @default(now()) @map("created_at")
-  updatedAt                 DateTime              @updatedAt @map("updated_at")
-
-  // relational fields   
-  divisi                    Divisi?               @relation(fields: [divisiId], references: [id])
-
-  @@map("MsAdmins")
-}
-
-model Divisi {
-  id                        Int                   @id @default(autoincrement())
-  divisiName                String                @map("nama_divisi")
 
   // references (prisma level only)
-  admins                    Admin?
-  pilihanPertamaToForm      FormRecruitment[]                @relation("ReferPilihanPertama")
-  pilihanKeduaToForm        FormRecruitment[]                @relation("ReferPilihanKedua")
-  pilihanKetigaToForm       FormRecruitment[]                @relation("ReferPilihanKetiga")
-  divisiDiterimaToForm      FormRecruitment[]                @relation("ReferDivisiDiterima")
-  pertanyaanDivisi          PertanyaanDivisi[]
+  userToRecipe              Recipe[]                @relation("ReferUserToRecipe")
 
-  @@map("MsDivisi")              
+  @@map("Users")
 }
 
-model FormRecruitment {
+model Ingredient {
   id                        Int                   @id @default(autoincrement())
-  email                     String               
-  nama                      String
-  nrp                       String                @unique
-  fakultasId                Int                   @map("fakultas_id")
-  asalDepartemen            String                @map("asal_departemen")
-  ketahui                   String
-  motivasi                  String
-  inovasi                   String
-  pilihanPertama            Int                   @map("pilihan_pertama")
-  pilihanKedua              Int                   @map("pilihan_kedua")
-  pilihanKetiga             Int                   @map("pilihan_ketiga")
-  statusDiterima            Boolean               @default(false)
-  divisiDiterima            Int?                  @map("divisi_diterima") @default(-1)
-  prioritas                 String
-  linkBuktiFollow           String                @map("link_bukti_follow")
-  linkCVKreatif             String                @map("link_cv_kreatif")
-  linkKRSM                  String                @map("link_krsm")
-  pertanyaan                Json[]                @map("pertanyaan")
-  createdAt                 DateTime              @default(now())
-  
+  ingredient1               String                @map("ingredient_1")
+  ingredient2               String?               @map("ingredient_2")
+  ingredient3               String?               @map("ingredient_3")
+  ingredient4               String?               @map("ingredient_4")
+  ingredient5               String?               @map("ingredient_5")
+  ingredient6               String?               @map("ingredient_6")
+  ingredient7               String?               @map("ingredient_7")
+  ingredient8               String?               @map("ingredient_8")
+  ingredient9               String?               @map("ingredient_9")
+  ingredient10              String?               @map("ingredient_10")
+  ingredient11              String?               @map("ingredient_11")
+  ingredient12              String?               @map("ingredient_12")
+  ingredient13              String?               @map("ingredient_13")
+  ingredient14              String?               @map("ingredient_14")
+  ingredient15              String?               @map("ingredient_15")
+  ingredient16              String?               @map("ingredient_16")
+  ingredient17              String?               @map("ingredient_17")
+  ingredient18              String?               @map("ingredient_18")
+  ingredient19              String?               @map("ingredient_19")
+  ingredient20              String?               @map("ingredient_20")
+
+  // references (prisma level only)
+  ingredientToRecipe        Recipe[]                @relation("ReferIngredientToRecipe")
+
+  @@map("Ingredients")
+}
+
+model Measure {
+  id                        Int                   @id @default(autoincrement())
+  measure1                  String                @map("measure_1")
+  measure2                  String?               @map("measure_2")
+  measure3                  String?               @map("measure_3")
+  measure4                  String?               @map("measure_4")
+  measure5                  String?               @map("measure_5")
+  measure6                  String?               @map("measure_6")
+  measure7                  String?               @map("measure_7")
+  measure8                  String?               @map("measure_8")
+  measure9                  String?               @map("measure_9")
+  measure10                 String?               @map("measure_10")
+  measure11                 String?               @map("measure_11")
+  measure12                 String?               @map("measure_12")
+  measure13                 String?               @map("measure_13")
+  measure14                 String?               @map("measure_14")
+  measure15                 String?               @map("measure_15")
+  measure16                 String?               @map("measure_16")
+  measure17                 String?               @map("measure_17")
+  measure18                 String?               @map("measure_18")
+  measure19                 String?               @map("measure_19")
+  measure20                 String?               @map("measure_20")
+
+  // references (prisma level only)
+  measureToRecipe           Recipe[]                @relation("ReferMeasureToRecipe")
+
+  @@map("Measures")
+}
+
+model Step {
+  id                        Int                   @id @default(autoincrement())
+  step1                     String                @map("step_1")
+  step2                     String?               @map("step_2")
+  step3                     String?               @map("step_3")
+  step4                     String?               @map("step_4")
+  step5                     String?               @map("step_5")
+  step6                     String?               @map("step_6")
+  step7                     String?               @map("step_7")
+  step8                     String?               @map("step_8")
+  step9                     String?               @map("step_9")
+  step10                    String?               @map("step_10")
+  step11                    String?               @map("step_11")
+  step12                    String?               @map("step_12")
+  step13                    String?               @map("step_13")
+  step14                    String?               @map("step_14")
+  step15                    String?               @map("step_15")
+  step16                    String?               @map("step_16")
+  step17                    String?               @map("step_17")
+  step18                    String?               @map("step_18")
+  step19                    String?               @map("step_19")
+  step20                    String?               @map("step_20")
+
+  // references (prisma level only)
+  stepToRecipe              Recipe[]                @relation("ReferStepToRecipe")
+
+  @@map("Steps")
+}
+
+model Recipe {
+  id                        Int                   @id @default(autoincrement())
+  name                      String                
+  description               String                
+  category                  Category                
+  vegan                     Boolean               
+  cookTime                  Int                   @map("cook_time")
+  thumbnail                 String                
+  origin                    Origin
+  ingredientId              Int                   @map("ingredient_id") @unique
+  measureId                 Int                   @map("measure_id") @unique
+  stepId                    Int                   @map("step_id") @unique
+  userId                    Int                   @map("user_id") @unique
+  createdAt                 DateTime              @default(now()) @map("created_at")
 
   // relational fields
-  fakultas                  Fakultas              @relation("ReferFakultasId", fields: [fakultasId], references: [id])
-  pilihanPertamaFromDivisi  Divisi                @relation("ReferPilihanPertama", fields: [pilihanPertama], references: [id])  
-  pilihanKeduaFromDivisi    Divisi                @relation("ReferPilihanKedua", fields: [pilihanKedua], references: [id])   
-  pilihanKetigaFromDivisi   Divisi                @relation("ReferPilihanKetiga", fields: [pilihanKetiga], references: [id])   
-  divisiDiterimaFromDivisi  Divisi?               @relation("ReferDivisiDiterima", fields: [divisiDiterima], references: [id])  
+  recipeFromIngredient      Ingredient?            @relation("ReferIngredientToRecipe", fields: [ingredientId], references: [id])
+  recipeFromMeasure         Measure?               @relation("ReferMeasureToRecipe", fields: [measureId], references: [id])
+  recipeFromStep            Step?                  @relation("ReferStepToRecipe", fields: [stepId], references: [id])
+  recipeFromUser            User?                  @relation("ReferUserToRecipe", fields: [userId], references: [id])
 
-  @@map("TrFormRecruitment")
+  @@map("Recipes")
 }
 
-model PertanyaanDivisi {
-  id                        Int                   @id @default(autoincrement())
-  divisiId                  Int                   @map("divisi_id")
-  pertanyaan                String                                
-
-  // relational fields   
-  divisi                    Divisi                @relation(fields: [divisiId], references: [id])
-
-  @@map("MsPertanyaanDivisi")
+enum Category {
+  Beef
+  Chicken
+  Seafood
+  Vegetarian
+  Pork
+  Lamb
+  Turkey
+  Pasta
+  Rice
+  Soup
+  Sandwiches
+  Salads
+  Pizza
+  Desserts 
 }
 
-model Fakultas {
-  id                        Int                   @id @default(autoincrement())
-  namaFakultas              String                @map("nama_fakultas")
-
-  // references (prisma level only)
-  forms                     FormRecruitment[]                @relation("ReferFakultasId")
-
-  @@map("MsFakultas")
-}
-
-model ShortenUrl {
-  id                        String                @id @default(uuid()) @db.Uuid
-  originalURL               String                @map("originalURL")
-  shortURL                  String                @map("shortURL") @unique
-  createdAt                 DateTime              @default(now()) @map("created_at")
-
-  @@map("link_shortener")
-}
-
-enum AdminPermission {
-  SUPERADMIN
-  ADMIN
+enum Origin {
+  Asian
+  MiddleEastern
+  Indian
+  African
+  LatinAmerican
+  Mediterranean
+  Western
+  SoutheastAsian
+  EasternEuropean
+  Scandinavian
 }
