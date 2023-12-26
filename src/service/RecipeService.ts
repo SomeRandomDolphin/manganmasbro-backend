@@ -2,10 +2,15 @@ import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
 import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
+import { queryUserDetailbyID } from "../repository/UserRepository";
 
 export const registerRecipe = async (data: RecipeRequest) => {    
+    const isRegistedUser = await queryUserDetailbyID(data.userId)
+    if(!isRegistedUser){
+        throw new CustomError(StatusCodes.BAD_REQUEST, "User tidak terdaftar")
+    }
+
     const ingredient = await createIngredient(
-        data.id,
         data.ingredient1,
         data.ingredient2,
         data.ingredient3,
@@ -29,7 +34,6 @@ export const registerRecipe = async (data: RecipeRequest) => {
     )
 
     const measure = await createMeasure(
-        data.id,
         data.measure1,
         data.measure2,
         data.measure3,
@@ -53,7 +57,6 @@ export const registerRecipe = async (data: RecipeRequest) => {
     )
 
     const step = await createStep(
-        data.id,
         data.step1,
         data.step2,
         data.step3,
@@ -77,7 +80,6 @@ export const registerRecipe = async (data: RecipeRequest) => {
     )
 
     const recipe = await createRecipe(
-        data.id,
         data.name,
         data.description,
         data.category,
@@ -104,7 +106,7 @@ export const registerRecipe = async (data: RecipeRequest) => {
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Recipe")
     }
 
-    const recipeCombined = await queryRecipebyID(data.id)
+    const recipeCombined = await queryRecipebyID(recipe.id)
     if(!recipeCombined){
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Recipe")
     }

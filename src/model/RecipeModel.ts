@@ -1,7 +1,6 @@
 import { Category, Origin } from "@prisma/client"
 
 export interface RecipeRequest {
-    id: number
     name: string
     description: string
     category: Category

@@ -3,7 +3,6 @@ import db from "../config/connectDb"
 import { RecipeRequest } from "../model/RecipeModel";
 
 export const createIngredient = async (
-    idInput: number,
     ingredient1Input: string,
     ingredient2Input: string,
     ingredient3Input: string,
@@ -25,9 +24,18 @@ export const createIngredient = async (
     ingredient19Input: string,
     ingredient20Input: string
 ) => {
+    const mostRecentId = await db.ingredient.findFirst({
+        select: {
+            id: true,
+        },
+        orderBy: {
+            id: 'desc',
+        },
+    })
+
     return await db.ingredient.create({
         data: {
-            id: idInput,
+            id: mostRecentId.id + 1,
             ingredient1: ingredient1Input,
             ingredient2: ingredient2Input,
             ingredient3: ingredient3Input,
@@ -53,7 +61,6 @@ export const createIngredient = async (
 }
 
 export const createMeasure = async (
-    idInput: number,
     measure1Input: string,
     measure2Input: string,
     measure3Input: string,
@@ -75,9 +82,18 @@ export const createMeasure = async (
     measure19Input: string,
     measure20Input: string,
 ) => {
+    const mostRecentId = await db.measure.findFirst({
+        select: {
+            id: true,
+        },
+        orderBy: {
+            id: 'desc',
+        },
+    })
+
     return await db.measure.create({
         data: {
-            id: idInput,
+            id: mostRecentId.id + 1,
             measure1: measure1Input,
             measure2: measure2Input,
             measure3: measure3Input,
@@ -103,7 +119,6 @@ export const createMeasure = async (
 }
 
 export const createStep = async (
-    idInput: number,
     step1Input: string,
     step2Input: string,
     step3Input: string,
@@ -125,9 +140,18 @@ export const createStep = async (
     step19Input: string,
     step20Input: string
 ) => {
+    const mostRecentId = await db.step.findFirst({
+        select: {
+            id: true,
+        },
+        orderBy: {
+            id: 'desc',
+        },
+    })
+
     return await db.step.create({
         data: {
-            id: idInput,
+            id: mostRecentId.id + 1,
             step1: step1Input,
             step2: step2Input,
             step3: step3Input,
@@ -153,7 +177,6 @@ export const createStep = async (
 }
 
 export const createRecipe = async (
-    idInput: number,
     nameInput: string,
     descriptionInput: string,
     categoryInput: Category,
@@ -163,9 +186,18 @@ export const createRecipe = async (
     originInput: Origin,
     userIdInput: number
 ) => {
+    const mostRecentId = await db.recipe.findFirst({
+        select: {
+            id: true,
+        },
+        orderBy: {
+            id: 'desc',
+        },
+    })
+
     return await db.recipe.create({
         data: {
-            id: idInput,
+            id: mostRecentId.id + 1,
             name: nameInput,
             description: descriptionInput,
             category: categoryInput,
@@ -173,9 +205,9 @@ export const createRecipe = async (
             cookTime: cookTimeInput,
             thumbnail: thumbnailInput,
             origin: originInput,
-            ingredientId: idInput,
-            measureId: idInput,
-            stepId: idInput,
+            ingredientId: mostRecentId.id + 1,
+            measureId: mostRecentId.id + 1,
+            stepId: mostRecentId.id + 1,
             userId: userIdInput
         },
     })
@@ -218,7 +250,6 @@ export const queryRecipebyID = async (idInput: number) => {
         deletedAt: recipe.deletedAt
     }
 }
-
 
 export const queryAllRecipe = async () => {
     const recipes = await db.recipe.findMany({

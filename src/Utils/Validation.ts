@@ -12,7 +12,6 @@ export const userSchema = Joi.object({
 })
 
 export const recipeSchema = Joi.object({
-    id: Joi.number().integer().required(),
     name: Joi.string().required(),
     description: Joi.string().required(),
     category: Joi.string().required().valid('Beef', 'Chicken', 'Seafood', 'Vegetarian', 'Pork', 'Lamb', 'Turkey', 'Pasta', 'Rice', 'Soup', 'Sandwiches', 'Salads', 'Pizza', 'Desserts'),
