@@ -182,7 +182,7 @@ export const createRecipe = async (
 }
 
 export const queryRecipebyID = async (idInput: number) => {
-    return await db.recipe.findUnique({
+    const recipe = await db.recipe.findUnique({
         where: {
             id: idInput
         },
@@ -192,18 +192,73 @@ export const queryRecipebyID = async (idInput: number) => {
             recipeFromStep: true
         },
     })
+
+    const ingredientsArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromIngredient[`ingredient${i + 1}`])
+    .filter(ingredient => ingredient !== null && ingredient !== undefined)
+    const measuresArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromMeasure[`measure${i + 1}`])
+    .filter(measure => measure !== null && measure !== undefined)
+    const stepsArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromStep[`step${i + 1}`])
+    .filter(step => step !== null && step !== undefined)
+
+    return {
+        id: recipe.id,
+        name: recipe.name,
+        description: recipe.description,
+        category: recipe.category,
+        vegan: recipe.vegan,
+        cookTime: recipe.cookTime,
+        thumbnail: recipe.thumbnail,
+        origin: recipe.origin,
+        ingredients: ingredientsArray,
+        measures: measuresArray,
+        steps: stepsArray,
+        userId: recipe.userId,
+        createdAt: recipe.createdAt,
+        updatedAt: recipe.updatedAt,
+        deletedAt: recipe.deletedAt
+    }
 }
 
 
 export const queryAllRecipe = async () => {
-    return await db.recipe.findMany({
+    const recipes = await db.recipe.findMany({
         include: {
             recipeFromIngredient: true,
             recipeFromMeasure: true,
             recipeFromStep: true
         },
     })
+
+    const formattedRecipes = recipes.map(recipe => {
+        const ingredientsArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromIngredient[`ingredient${i + 1}`])
+            .filter(ingredient => ingredient !== null && ingredient !== undefined);
+        const measuresArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromMeasure[`measure${i + 1}`])
+            .filter(measure => measure !== null && measure !== undefined);
+        const stepsArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromStep[`step${i + 1}`])
+            .filter(step => step !== null && step !== undefined);
+
+        return {
+            id: recipe.id,
+            name: recipe.name,
+            description: recipe.description,
+            category: recipe.category,
+            vegan: recipe.vegan,
+            cookTime: recipe.cookTime,
+            thumbnail: recipe.thumbnail,
+            origin: recipe.origin,
+            ingredients: ingredientsArray,
+            measures: measuresArray,
+            steps: stepsArray,
+            userId: recipe.userId,
+            createdAt: recipe.createdAt,
+            updatedAt: recipe.updatedAt,
+            deletedAt: recipe.deletedAt
+        }
+    })
+
+    return formattedRecipes
 }
+
 
 
 export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
@@ -217,7 +272,7 @@ export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
             cookTime: data.cookTime,
             thumbnail: data.thumbnail,
             origin: data.origin,
-            // userId: data.userId // Uncomment if needed
+            userId: data.userId
         },
     })
   
@@ -325,4 +380,3 @@ export const removeRecipe = async (recipeId: number) => {
 
     return recipe
 }
-
