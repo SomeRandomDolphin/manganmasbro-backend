@@ -73,7 +73,7 @@ export const registerRecipe = async (data: RecipeRequest) => {
         data.step18,
         data.step19,
         data.step20,
-        data.userId
+        // data.userId
     )
     if(!recipe){
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Recipe")

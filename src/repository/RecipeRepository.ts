@@ -70,21 +70,21 @@ export const createRecipe = async (
     step18Input: string,
     step19Input: string,
     step20Input: string,
-    userIdInput: number
+    // userIdInput: number
 ) => {
-    const recipe = await db.recipe.create({
-        data: {
-            id: idInput,
-            name: nameInput,
-            description: descriptionInput,
-            category: categoryInput,
-            vegan: veganInput,
-            cookTime: cookTimeInput,
-            thumbnail: thumbnailInput,
-            origin: originInput,
-            userId: userIdInput
-        },
-    })
+    // const recipe = await db.recipe.create({
+    //     data: {
+    //         id: idInput,
+    //         name: nameInput,
+    //         description: descriptionInput,
+    //         category: categoryInput,
+    //         vegan: veganInput,
+    //         cookTime: cookTimeInput,
+    //         thumbnail: thumbnailInput,
+    //         origin: originInput,
+    //         userId: userIdInput
+    //     },
+    // })
 
     const ingredient = await db.ingredient.create({
         data: {
@@ -164,7 +164,8 @@ export const createRecipe = async (
         },
     })
 
-    return [recipe, ingredient, measure, step]
+    // return [recipe, ingredient, measure, step]
+    return [ingredient, measure, step]
 }
 
 export const queryRecipebyID = async (idInput: number) => {
