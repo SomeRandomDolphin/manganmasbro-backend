@@ -23,7 +23,6 @@ export const registerUser = async (req: Request, res: Response) => {
 
   try {
     const user = await UserService.registerUser(value);
-    console.log(value);
     responseData(res, StatusCodes.OK, "User Registration Successful", user);
   } catch (err) {
     responseError(res, err);
