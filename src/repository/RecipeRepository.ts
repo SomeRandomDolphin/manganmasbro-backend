@@ -289,10 +289,28 @@ export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
   
     return updatedRecipe
 }
-  
+
 export const removeRecipe = async (recipeId: number) => {
-    await db.ingredient.delete({ where: { id: recipeId } })
-    await db.measure.delete({ where: { id: recipeId } })
-    await db.step.delete({ where: { id: recipeId } })
-    await db.recipe.delete({ where: { id: recipeId } })
+    const recipe = await db.recipe.update({
+        where: { id: recipeId },
+        data: {
+            deletedAt: new Date()
+        },
+        select: {
+            id: true,
+            name: true,
+            description: true,
+            category: true,
+            vegan: true,
+            cookTime: true,
+            thumbnail: true,
+            origin: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true
+        }
+    })
+
+    return recipe
 }
+

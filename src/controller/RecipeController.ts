@@ -73,8 +73,8 @@ export const updateRecipe = async (req: Request, res: Response) => {
 export const deleteRecipe = async (req: Request, res: Response) => {
     try {
         const recipeId = Number(req.params.recipe_id)
-        await RecipeService.deleteRecipe(recipeId)
-        responseData(res, StatusCodes.OK, "Recipe Deleted", undefined)
+        const url = await RecipeService.deleteRecipe(recipeId)
+        responseData(res, StatusCodes.OK, "Recipe Deleted", url)
     } catch (err) {
         responseError(res, err)
     }
