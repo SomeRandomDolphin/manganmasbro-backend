@@ -1,18 +1,11 @@
 import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
-import { createRecipe, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
+import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
 
 export const registerRecipe = async (data: RecipeRequest) => {    
-    const recipe = await createRecipe(
+    const ingredient = await createIngredient(
         data.id,
-        data.name,
-        data.description,
-        data.category,
-        data.vegan,
-        data.cookTime,
-        data.thumbnail,
-        data.origin,
         data.ingredient1,
         data.ingredient2,
         data.ingredient3,
@@ -32,7 +25,11 @@ export const registerRecipe = async (data: RecipeRequest) => {
         data.ingredient17,
         data.ingredient18,
         data.ingredient19,
-        data.ingredient20,
+        data.ingredient20
+    )
+
+    const measure = await createMeasure(
+        data.id,
         data.measure1,
         data.measure2,
         data.measure3,
@@ -52,7 +49,11 @@ export const registerRecipe = async (data: RecipeRequest) => {
         data.measure17,
         data.measure18,
         data.measure19,
-        data.measure20,
+        data.measure20
+    )
+
+    const step = await createStep(
+        data.id,
         data.step1,
         data.step2,
         data.step3,
@@ -72,14 +73,43 @@ export const registerRecipe = async (data: RecipeRequest) => {
         data.step17,
         data.step18,
         data.step19,
-        data.step20,
-        // data.userId
+        data.step20
     )
+
+    const recipe = await createRecipe(
+        data.id,
+        data.name,
+        data.description,
+        data.category,
+        data.vegan,
+        data.cookTime,
+        data.thumbnail,
+        data.origin,
+        data.userId
+    )
+
+    if(!ingredient){
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Ingredient")
+    }
+
+    if(!measure){
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Measure")
+    }
+
+    if(!step){
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Step")
+    }
+
     if(!recipe){
         throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Recipe")
     }
 
-    return recipe
+    const recipeCombined = await queryRecipebyID(data.id)
+    if(!recipeCombined){
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Recipe")
+    }
+
+    return recipeCombined
 }
 
 export const retrieveRecipe = async (data: number) => {    

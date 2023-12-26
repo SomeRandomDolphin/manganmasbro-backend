@@ -119,10 +119,10 @@ model Recipe {
   cookTime                  Int                   @map("cook_time")
   thumbnail                 String                
   origin                    Origin
-  ingredientId              Int                   @map("ingredient_id") @unique
-  measureId                 Int                   @map("measure_id") @unique
-  stepId                    Int                   @map("step_id") @unique
-  userId                    Int                   @map("user_id") @unique
+  ingredientId              Int                   @map("ingredient_id")
+  measureId                 Int                   @map("measure_id")
+  stepId                    Int                   @map("step_id")
+  userId                    Int                   @map("user_id")
   createdAt                 DateTime              @default(now()) @map("created_at")
   updatedAt                 DateTime?             @updatedAt @map("updated_at")
   deletedAt                 DateTime?             @map("deleted_at")

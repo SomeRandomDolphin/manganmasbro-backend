@@ -1,16 +1,9 @@
 import { Category, Origin } from "@prisma/client";
 import db from "../config/connectDb"
-import { RecipeRequest } from "../model/RecipeModel"; 
+import { RecipeRequest } from "../model/RecipeModel";
 
-export const createRecipe = async (
+export const createIngredient = async (
     idInput: number,
-    nameInput: string,
-    descriptionInput: string,
-    categoryInput: Category,
-    veganInput: boolean,
-    cookTimeInput: number,
-    thumbnailInput: string,
-    originInput: Origin,
     ingredient1Input: string,
     ingredient2Input: string,
     ingredient3Input: string,
@@ -30,64 +23,9 @@ export const createRecipe = async (
     ingredient17Input: string,
     ingredient18Input: string,
     ingredient19Input: string,
-    ingredient20Input: string,
-    measure1Input: string,
-    measure2Input: string,
-    measure3Input: string,
-    measure4Input: string,
-    measure5Input: string,
-    measure6Input: string,
-    measure7Input: string,
-    measure8Input: string,
-    measure9Input: string,
-    measure10Input: string,
-    measure11Input: string,
-    measure12Input: string,
-    measure13Input: string,
-    measure14Input: string,
-    measure15Input: string,
-    measure16Input: string,
-    measure17Input: string,
-    measure18Input: string,
-    measure19Input: string,
-    measure20Input: string,
-    step1Input: string,
-    step2Input: string,
-    step3Input: string,
-    step4Input: string,
-    step5Input: string,
-    step6Input: string,
-    step7Input: string,
-    step8Input: string,
-    step9Input: string,
-    step10Input: string,
-    step11Input: string,
-    step12Input: string,
-    step13Input: string,
-    step14Input: string,
-    step15Input: string,
-    step16Input: string,
-    step17Input: string,
-    step18Input: string,
-    step19Input: string,
-    step20Input: string,
-    // userIdInput: number
+    ingredient20Input: string
 ) => {
-    // const recipe = await db.recipe.create({
-    //     data: {
-    //         id: idInput,
-    //         name: nameInput,
-    //         description: descriptionInput,
-    //         category: categoryInput,
-    //         vegan: veganInput,
-    //         cookTime: cookTimeInput,
-    //         thumbnail: thumbnailInput,
-    //         origin: originInput,
-    //         userId: userIdInput
-    //     },
-    // })
-
-    const ingredient = await db.ingredient.create({
+    return await db.ingredient.create({
         data: {
             id: idInput,
             ingredient1: ingredient1Input,
@@ -112,8 +50,32 @@ export const createRecipe = async (
             ingredient20: ingredient20Input
         },
     })
+}
 
-    const measure = await db.measure.create({
+export const createMeasure = async (
+    idInput: number,
+    measure1Input: string,
+    measure2Input: string,
+    measure3Input: string,
+    measure4Input: string,
+    measure5Input: string,
+    measure6Input: string,
+    measure7Input: string,
+    measure8Input: string,
+    measure9Input: string,
+    measure10Input: string,
+    measure11Input: string,
+    measure12Input: string,
+    measure13Input: string,
+    measure14Input: string,
+    measure15Input: string,
+    measure16Input: string,
+    measure17Input: string,
+    measure18Input: string,
+    measure19Input: string,
+    measure20Input: string,
+) => {
+    return await db.measure.create({
         data: {
             id: idInput,
             measure1: measure1Input,
@@ -138,8 +100,32 @@ export const createRecipe = async (
             measure20: measure20Input
         },
     })
+}
 
-    const step = await db.step.create({
+export const createStep = async (
+    idInput: number,
+    step1Input: string,
+    step2Input: string,
+    step3Input: string,
+    step4Input: string,
+    step5Input: string,
+    step6Input: string,
+    step7Input: string,
+    step8Input: string,
+    step9Input: string,
+    step10Input: string,
+    step11Input: string,
+    step12Input: string,
+    step13Input: string,
+    step14Input: string,
+    step15Input: string,
+    step16Input: string,
+    step17Input: string,
+    step18Input: string,
+    step19Input: string,
+    step20Input: string
+) => {
+    return await db.step.create({
         data: {
             id: idInput,
             step1: step1Input,
@@ -164,9 +150,35 @@ export const createRecipe = async (
             step20: step20Input
         },
     })
+}
 
-    // return [recipe, ingredient, measure, step]
-    return [ingredient, measure, step]
+export const createRecipe = async (
+    idInput: number,
+    nameInput: string,
+    descriptionInput: string,
+    categoryInput: Category,
+    veganInput: boolean,
+    cookTimeInput: number,
+    thumbnailInput: string,
+    originInput: Origin,
+    userIdInput: number
+) => {
+    return await db.recipe.create({
+        data: {
+            id: idInput,
+            name: nameInput,
+            description: descriptionInput,
+            category: categoryInput,
+            vegan: veganInput,
+            cookTime: cookTimeInput,
+            thumbnail: thumbnailInput,
+            origin: originInput,
+            ingredientId: idInput,
+            measureId: idInput,
+            stepId: idInput,
+            userId: userIdInput
+        },
+    })
 }
 
 export const queryRecipebyID = async (idInput: number) => {
