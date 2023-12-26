@@ -1,6 +1,6 @@
 import db from "../config/connectDb"
-import bcrypt from "bcrypt"
-import env from "../config/LoacEnv"
+import bcrypt from "bcrypt";
+import env from "../config/LoacEnv";
 import { UserRequest } from "../model/UserModel"; 
 
 export const createUser = async (
