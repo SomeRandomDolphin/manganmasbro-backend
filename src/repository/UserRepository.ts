@@ -60,8 +60,24 @@ export const editUser = async (userId: number, data: UserRequest) => {
     return user;
 }
   
+
+
 export const removeUser = async (userId: number) => {
-    await db.user.delete({
+    const user = await db.user.update({
         where: { id: userId },
+        data: {
+            deletedAt: new Date()
+        },
+        select: {
+            id: true,
+            username: true,
+            email: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true
+        },
     })
+
+    return user
 }
+

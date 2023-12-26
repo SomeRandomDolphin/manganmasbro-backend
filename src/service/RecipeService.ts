@@ -142,11 +142,12 @@ export const updateRecipe = async (recipeId: number, data: RecipeRequest) => {
 }
   
 export const deleteRecipe = async (recipeId: number) => {
-    const isRegistered = await queryRecipebyID(recipeId);
+    const isRegistered = await removeRecipe(recipeId);
   
     if (!isRegistered) {
         throw new CustomError(StatusCodes.NOT_FOUND, "Recipe Not Found")
     }
   
     await removeRecipe(recipeId)
+    return isRegistered
 }

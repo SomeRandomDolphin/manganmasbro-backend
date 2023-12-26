@@ -67,9 +67,10 @@ export const updateUser = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.user_id)
-        await UserService.deleteUser(userId)
-        responseData(res, StatusCodes.OK, "User Deleted Successfully", undefined)
+        const url = await UserService.deleteUser(userId)
+        responseData(res, StatusCodes.OK, "User Deleted Successfully", url)
     } catch (err) {
         responseError(res, err)
     }
 }
+

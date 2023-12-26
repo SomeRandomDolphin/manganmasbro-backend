@@ -52,11 +52,12 @@ export const updateUser = async (userId: number, data: UserRequest) => {
 }
   
   export const deleteUser = async (userId: number) => {
-    const isRegistered = await queryUserDetailbyID(userId);
+    const isRegistered = await removeUser(userId);
   
     if (!isRegistered) {
       throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
     }
   
     await removeUser(userId)
+    return isRegistered
 }
