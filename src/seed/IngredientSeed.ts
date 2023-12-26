@@ -27,7 +27,8 @@ export const ingredients = [
     ingredient_1: "white bread, crusts removed, cut into cubes",
     ingredient_2: "milk",
     ingredient_3: "butter, divided",
-    ingredient_4: "large yellow or white onion, grated using the large holes of a box grater",
+    ingredient_4:
+      "large yellow or white onion, grated using the large holes of a box grater",
     ingredient_5: "large egg",
     ingredient_6: "ground beef",
     ingredient_7: "ground pork",
@@ -39,7 +40,8 @@ export const ingredients = [
     ingredient_13: "flour",
     ingredient_14: "beef stock",
     ingredient_15: "sour cream (use full-fat or the sauce may curdle)",
-    ingredient_16: "lingonberry, red currant, raspberry, or cranberry jelly, to taste (optional)",
+    ingredient_16:
+      "lingonberry, red currant, raspberry, or cranberry jelly, to taste (optional)",
     ingredient_17: "Salt and pepper, to taste",
     ingredient_18: null,
     ingredient_19: null,
