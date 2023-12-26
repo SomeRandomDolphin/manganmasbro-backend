@@ -83,7 +83,9 @@ export const queryUserDetailbyEmail = async (emailInput: string) => {
 
 export const editUser = async (userId: number, data: UserRequest) => {
     const user = await db.user.update({
-        where: { id: userId },
+        where: { 
+            id: userId 
+        },
         data: {
             username: data.username,
             email: data.email,
@@ -98,7 +100,9 @@ export const editUser = async (userId: number, data: UserRequest) => {
 
 export const removeUser = async (userId: number) => {
     const user = await db.user.update({
-        where: { id: userId },
+        where: { 
+            id: userId 
+        },
         data: {
             deletedAt: new Date()
         },

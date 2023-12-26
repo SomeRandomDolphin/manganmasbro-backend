@@ -293,8 +293,10 @@ export const queryAllRecipe = async () => {
 
 
 export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
-    const updatedRecipe = await db.recipe.update({
-        where: { id: recipeId },
+    await db.recipe.update({
+        where: { 
+            id: recipeId 
+        },
         data: {
             name: data.name,
             description: data.description,
@@ -308,7 +310,9 @@ export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
     })
   
     await db.ingredient.update({
-        where: { id: recipeId },
+        where: { 
+            id: recipeId 
+        },
         data: {
             ingredient1: data.ingredient1,
             ingredient2: data.ingredient2,
@@ -385,12 +389,14 @@ export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
         },
     })
   
-    return updatedRecipe
+    return await queryRecipebyID(recipeId)
 }
 
 export const removeRecipe = async (recipeId: number) => {
-    const recipe = await db.recipe.update({
-        where: { id: recipeId },
+    await db.recipe.update({
+        where: { 
+            id: recipeId 
+        },
         data: {
             deletedAt: new Date()
         },
@@ -409,5 +415,5 @@ export const removeRecipe = async (recipeId: number) => {
         }
     })
 
-    return recipe
+    return await queryRecipebyID(recipeId)
 }
