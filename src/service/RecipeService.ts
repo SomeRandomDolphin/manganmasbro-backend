@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
-import { createRecipe, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
+import { createRecipe, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe, queryRecipeByUser } from "../repository/RecipeRepository";
 
 export const registerRecipe = async (data: RecipeRequest) => {    
     const recipe = await createRecipe(
@@ -119,4 +119,14 @@ export const deleteRecipe = async (recipeId: number) => {
     }
   
     await removeRecipe(recipeId)
+}
+
+export const userRecipe = async (userId: number) => {
+    const userRecipes = await queryRecipeByUser(userId);
+
+    if (!userRecipes) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Has No Any Recipe");
+    }
+
+    return userRecipes;
 }

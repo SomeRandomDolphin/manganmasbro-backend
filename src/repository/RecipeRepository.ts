@@ -296,3 +296,23 @@ export const removeRecipe = async (recipeId: number) => {
     await db.step.delete({ where: { id: recipeId } })
     await db.recipe.delete({ where: { id: recipeId } })
 }
+
+export const queryRecipeByUser = async (userId: number) => {
+    return await db.recipe.findFirst({
+        where: {
+            id: userId,
+        },
+        include: {
+            recipeFromUser: {
+                select: {
+                    id: true,
+                    username: true,
+                    email: true,
+                }
+            },
+            recipeFromIngredient: true,
+            recipeFromMeasure: true,
+            recipeFromStep: true,
+        }
+    })
+}
