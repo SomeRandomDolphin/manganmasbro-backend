@@ -1,5 +1,6 @@
 import { Category, Origin } from "@prisma/client";
 import db from "../config/connectDb"
+import { RecipeRequest } from "../model/RecipeModel"; 
 
 export const createRecipe = async (
     idInput: number,
@@ -190,4 +191,108 @@ export const queryAllRecipe = async () => {
             recipeFromStep: true
         },
     })
+}
+
+
+export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
+    const updatedRecipe = await db.recipe.update({
+        where: { id: recipeId },
+        data: {
+            name: data.name,
+            description: data.description,
+            category: data.category,
+            vegan: data.vegan,
+            cookTime: data.cookTime,
+            thumbnail: data.thumbnail,
+            origin: data.origin,
+            // userId: data.userId // Uncomment if needed
+        },
+    })
+  
+    await db.ingredient.update({
+        where: { id: recipeId },
+        data: {
+            ingredient1: data.ingredient1,
+            ingredient2: data.ingredient2,
+            ingredient3: data.ingredient3,
+            ingredient4: data.ingredient4,
+            ingredient5: data.ingredient5,
+            ingredient6: data.ingredient6,
+            ingredient7: data.ingredient7,
+            ingredient8: data.ingredient8,
+            ingredient9: data.ingredient9,
+            ingredient10: data.ingredient10,
+            ingredient11: data.ingredient11,
+            ingredient12: data.ingredient12,
+            ingredient13: data.ingredient13,
+            ingredient14: data.ingredient14,
+            ingredient15: data.ingredient15,
+            ingredient16: data.ingredient16,
+            ingredient17: data.ingredient17,
+            ingredient18: data.ingredient18,
+            ingredient19: data.ingredient19,
+            ingredient20: data.ingredient20
+        },
+    })
+  
+    await db.measure.update({
+        where: { id: recipeId },
+        data: {
+            measure1: data.measure1,
+            measure2: data.measure2,
+            measure3: data.measure3,
+            measure4: data.measure4,
+            measure5: data.measure5,
+            measure6: data.measure6,
+            measure7: data.measure7,
+            measure8: data.measure8,
+            measure9: data.measure9,
+            measure10: data.measure10,
+            measure11: data.measure11,
+            measure12: data.measure12,
+            measure13: data.measure13,
+            measure14: data.measure14,
+            measure15: data.measure15,
+            measure16: data.measure16,
+            measure17: data.measure17,
+            measure18: data.measure18,
+            measure19: data.measure19,
+            measure20: data.measure20
+        },
+    })
+  
+    await db.step.update({
+        where: { id: recipeId },
+        data: {
+            step1: data.step1,
+            step2: data.step2,
+            step3: data.step3,
+            step4: data.step4,
+            step5: data.step5,
+            step6: data.step6,
+            step7: data.step7,
+            step8: data.step8,
+            step9: data.step9,
+            step10: data.step10,
+            step11: data.step11,
+            step12: data.step12,
+            step13: data.step13,
+            step14: data.step14,
+            step15: data.step15,
+            step16: data.step16,
+            step17: data.step17,
+            step18: data.step18,
+            step19: data.step19,
+            step20: data.step20
+        },
+    })
+  
+    return updatedRecipe
+}
+  
+export const removeRecipe = async (recipeId: number) => {
+    await db.ingredient.delete({ where: { id: recipeId } })
+    await db.measure.delete({ where: { id: recipeId } })
+    await db.step.delete({ where: { id: recipeId } })
+    await db.recipe.delete({ where: { id: recipeId } })
 }

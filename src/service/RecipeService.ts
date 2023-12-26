@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
-import { createRecipe, queryRecipebyID, queryAllRecipe } from "../repository/RecipeRepository";
+import { createRecipe, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
 
 export const registerRecipe = async (data: RecipeRequest) => {    
     const recipe = await createRecipe(
@@ -93,4 +93,30 @@ export const retrieveRecipe = async (data: number) => {
 
 export const retrieveAllRecipe = async () => {
     return await queryAllRecipe()
+}
+
+export const updateRecipe = async (recipeId: number, data: RecipeRequest) => {
+    const isRegistered = await queryRecipebyID(recipeId);
+  
+    if (!isRegistered) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "Recipe Not Found")
+    }
+  
+    const updatedRecipe = await editRecipe(recipeId, data)
+  
+    if (!updatedRecipe) {
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Data")
+    }
+  
+    return updatedRecipe;
+}
+  
+export const deleteRecipe = async (recipeId: number) => {
+    const isRegistered = await queryRecipebyID(recipeId);
+  
+    if (!isRegistered) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "Recipe Not Found")
+    }
+  
+    await removeRecipe(recipeId)
 }
