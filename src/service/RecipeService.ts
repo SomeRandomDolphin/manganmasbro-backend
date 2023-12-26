@@ -3,6 +3,7 @@ import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
 import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
 
+
 export const registerRecipe = async (data: RecipeRequest) => {    
     const ingredient = await createIngredient(
         data.id,
@@ -149,5 +150,16 @@ export const deleteRecipe = async (recipeId: number) => {
     }
   
     await removeRecipe(recipeId)
+  
     return isRegistered
+}
+
+export const userRecipe = async (userId: number) => {
+    const userRecipes = await queryRecipeByUser(userId);
+
+    if (!userRecipes) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Has No Any Recipe");
+    }
+
+    return userRecipes;
 }
