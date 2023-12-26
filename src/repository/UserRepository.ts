@@ -6,15 +6,26 @@ export const createUser = async (
     emailInput: string, 
     passwordInput: string,
 ) => {
-    return await db.user.create({
+    const user = await db.user.create({
         data: {
             id: idInput,
             username: usernameInput,
             email: emailInput,
             password: passwordInput,
-        }
+        },
+        select: {
+            id: true,
+            username: true,
+            email: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true
+        },
     })
+
+    return user
 }
+
 
 export const queryUserDetailbyID = async (idInput: number) => {
     const data = await db.user.findUnique({
