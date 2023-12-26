@@ -183,7 +183,7 @@ export const recipes = [
     cook_time: 30,
     thumbnail:
       "https://www.simplyrecipes.com/thmb/9DSEOemXX-gGJQBJqsY-qDzRjDw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Spaghetti-Carbonara-LEAD-6-b3880a6eb49f4158be6f13885c797ded.jpg",
-    origin: "Mediterranean",
+    origin: Mediterranean,
     ingredient_id: 10,
     measure_id: 10,
     step_id: 10,
@@ -194,12 +194,12 @@ export const recipes = [
     name: "Smashed Tomato Pasta",
     description:
       "Type 'homemade tomato sauce' into your Google search box and you’ll turn up nearly 400 million results. Some demand hours at the stove, others are fabulously unfussy. This smashed tomato pasta leans heavily towards the easy end of the spectrum. It calls for just five ingredients, takes about 10 minutes of hands-on time, and results in a sauce you’ll find yourself turning to again and again.",
-    category: "Pasta",
+    category: Pasta,
     vegan: false,
     cook_time: 70,
     thumbnail:
       "https://www.simplyrecipes.com/thmb/OBoz-vO35Gt9t5h13Dwr35U5Q7A=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Smashed-Tomato-Pasta-LEAD-7-97b2ed1341c145359bd4f5cee6a57dc6.jpg",
-    origin: "Mediterranean",
+    origin: Mediterranean,
     ingredient_id: 11,
     measure_id: 11,
     step_id: 11,
@@ -210,12 +210,12 @@ export const recipes = [
     name: "Sheet Pan Grilled Cheese Sandwiches",
     description:
       "This simple sheet pan technique allows you to make five grilled cheese sandwiches at the same time—meaning everyone around the table gets an equally gooey and warm sandwich at the same time—with barely more effort than it takes to prep one. We went with four types of cheese—goat, white cheddar, provolone, and Swiss—for these buttery, rich sheet pan grilled cheese sandwiches, but feel free to change the cheeses up depending on what you like or what you have in your fridge. You could also dress these up with a few added toppings, like spinach, basil leaves, and tomato slices—or allow folks to customize their own sandwich. Your grilled cheese, your choice.",
-    category: "Sandwiches",
+    category: Sandwiches,
     vegan: false,
     cook_time: 20,
     thumbnail:
       "https://www.simplyrecipes.com/thmb/RXAvsY-gOzWqmGZZBMHTF9wiuN8=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Sheet-Pan-Grilled-Cheese-Sandwiches-LEAD-4-e66e37767e0d4748af66c29ebc3c4cf3.jpg",
-    origin: "Western",
+    origin: Western,
     ingredient_id: 12,
     measure_id: 12,
     step_id: 12,
