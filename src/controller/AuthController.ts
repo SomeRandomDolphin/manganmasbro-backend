@@ -34,7 +34,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
 
     try{
         const data = await AuthService.userProfile(username)
-        responseData(res, StatusCodes.OK, "success", data)
+        responseData(res, StatusCodes.OK, "Profile Retrieved Successfully", data)
     }catch(err){
         responseError(res, err)
     }
