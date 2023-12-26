@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { LoginRequest } from "../model/AuthModel";
-import { queryUserById, queryUserByEmail } from "../repository/AuthRepository";
+import { queryUserByEmail, queryUserByUsername } from "../repository/AuthRepository";
 import { generateAccessToken } from "../Utils/JWT-Token";
 import bcrypt from "bcrypt"
 
@@ -25,8 +25,8 @@ export const loginUser = async (data: LoginRequest) => {
     return {accessToken}
 }
 
-export const userProfile = async (userId: number) => {
-    const user = await queryUserById(userId)
+export const userProfile = async (userUsername: string) => {
+    const user = await queryUserByUsername(userUsername)
 
     if(!user){
         throw new CustomError(StatusCodes.NOT_FOUND, "User not found")

@@ -30,10 +30,10 @@ export const loginUser = async (req: Request, res: Response) => {
 }
 
 export const getUserProfile = async (req: Request, res: Response) => {
-    const { id } = (req as UserToken).user
+    const { username } = (req as UserToken).user
 
     try{
-        const data = await AuthService.userProfile(id)
+        const data = await AuthService.userProfile(username)
         responseData(res, StatusCodes.OK, "success", data)
     }catch(err){
         responseError(res, err)
