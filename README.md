@@ -1,4 +1,4 @@
-# Mabacup 2023 Backend
+# Mangan Masbro Backend
 
 ## Prerequisite
 1. [Typescript](https://www.typescriptlang.org/download)
@@ -8,7 +8,7 @@
 ## Quick Start
 Clone the repo:
 ```bash
-git clone https://github.com/mabacupits2023/mabacup2023-backend.git
+git clone https://github.com/SomeRandomDolphin/manganmasbro-backend.git
 ```
 
 Install the dependencies:
@@ -98,7 +98,7 @@ Error
 ```
 
 ## API Documentation
-Please refer to this [postman](https://documenter.getpostman.com/view/28923101/2s9Xy6ppZo#dfd6374b-9322-4424-93ef-70738ab61e44)
+Please refer to this [postman](https://documenter.getpostman.com/view/31989167/2s9Ykt4Jj7#832ce2da-ec19-4391-a657-b60641ae7b78)
 
 ## References
 1. [setting up ts and node](https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript)  
