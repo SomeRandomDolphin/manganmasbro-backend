@@ -1,8 +1,8 @@
  import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
-import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryRecipebyUser, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
-import { queryUserDetailbyID } from "../repository/UserRepository";
+import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryRecipebyUserID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
+import { queryUserDetailbyID, queryUserDetailbyUsername } from "../repository/UserRepository";
 
 export const registerRecipe = async (data: RecipeRequest) => {    
     const isRegistedUser = await queryUserDetailbyID(data.userId)
@@ -127,14 +127,20 @@ export const retrieveAllRecipe = async () => {
     return await queryAllRecipe()
 }
 
-export const retrieveUserRecipe = async (userId: number) => {
-    const user = await queryRecipebyUser(userId)
+export const retrieveUserRecipe = async (userUsername: string) => {
+    const user = await queryUserDetailbyUsername(userUsername)
 
     if(!user){
-        throw new CustomError(StatusCodes.NOT_FOUND, "User not found")
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
     }
 
-    return user
+    const recipe = await queryRecipebyUserID(user.id)
+
+    if (recipe.length === 0) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "Recipe Not Found");
+    }
+
+    return recipe
 }
 
 export const updateRecipe = async (recipeId: number, data: RecipeRequest) => {
