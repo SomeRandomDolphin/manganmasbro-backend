@@ -10,6 +10,7 @@ import path from "path"
 // import staffRecruitRouter from "./router/StaffRecruitRouter"
 import userRouter from "./router/UserRouter"
 import recipeRouter from "./router/RecipeRouter"
+import authRouter from './router/AuthRouter'
 
 const app: Express = express()
 const PORT = env.PORT || 80
@@ -24,6 +25,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 // app.use("/api/staff-recruitment", staffRecruitRouter)
 app.use("/api/users", userRouter)
 app.use("/api/recipes", recipeRouter)
+app.use('/api/auth', authRouter)
 
 
 app.get("/api", (_: Request, res: Response) => {

@@ -4,7 +4,7 @@ import { userAuthMiddleware } from "../middleware/AuthMiddleware"
 
 const authRouter = Router()
 
-authRouter.post("/auth/login", loginUser)
-authRouter.get("/auth/me", userAuthMiddleware, getUserProfile)
+authRouter.post("/login", loginUser)
+authRouter.get("/me", userAuthMiddleware, getUserProfile)
 
 export default authRouter
