@@ -5,6 +5,7 @@ import { RecipeRequest } from "../model/RecipeModel";
 import { responseData, responseError } from "../Utils/API-Response";
 import { StatusCodes } from "http-status-codes";
 import * as RecipeService from "../service/RecipeService" 
+import { UserToken } from "../middleware/RecipeMiddleware";
 
 export const createRecipe = async (req: Request, res: Response) => {    
     const { 
@@ -43,6 +44,18 @@ export const retrieveAllRecipe = async (req: Request, res: Response) => {
         const urls = await RecipeService.retrieveAllRecipe()
         responseData(res, StatusCodes.OK, "All Recipe Retrieved", urls)
     } catch(err){
+        responseError(res, err)
+    }
+}
+
+export const retrieveUserRecipe = async (req: Request, res: Response) => {
+    const { id } = (req as UserToken).user
+    console.log(id)
+
+    try{
+        const data = await RecipeService.retrieveUserRecipe(id)
+        responseData(res, StatusCodes.OK, "success", data)
+    }catch(err){
         responseError(res, err)
     }
 }

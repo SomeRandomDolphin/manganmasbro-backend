@@ -1,7 +1,7 @@
-import { StatusCodes } from "http-status-codes";
+ import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
-import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
+import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryRecipebyUser, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
 import { queryUserDetailbyID } from "../repository/UserRepository";
 
 export const registerRecipe = async (data: RecipeRequest) => {    
@@ -125,6 +125,16 @@ export const retrieveRecipe = async (data: number) => {
 
 export const retrieveAllRecipe = async () => {
     return await queryAllRecipe()
+}
+
+export const retrieveUserRecipe = async (userId: number) => {
+    const user = await queryRecipebyUser(userId)
+
+    if(!user){
+        throw new CustomError(StatusCodes.NOT_FOUND, "User not found")
+    }
+
+    return user
 }
 
 export const updateRecipe = async (recipeId: number, data: RecipeRequest) => {

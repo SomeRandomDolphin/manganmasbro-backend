@@ -251,6 +251,44 @@ export const queryRecipebyID = async (idInput: number) => {
     }
 }
 
+export const queryRecipebyUser = async (idInput: number) => {
+    const recipe = await db.recipe.findFirst({
+        where: {
+            id: idInput
+        },
+        include: {
+            recipeFromIngredient: true,
+            recipeFromMeasure: true,
+            recipeFromStep: true
+        },
+    })
+
+    const ingredientsArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromIngredient[`ingredient${i + 1}`])
+    .filter(ingredient => ingredient !== null && ingredient !== undefined)
+    const measuresArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromMeasure[`measure${i + 1}`])
+    .filter(measure => measure !== null && measure !== undefined)
+    const stepsArray = Array.from({ length: 20 }, (_, i) => recipe.recipeFromStep[`step${i + 1}`])
+    .filter(step => step !== null && step !== undefined)
+
+    return {
+        id: recipe.id,
+        name: recipe.name,
+        description: recipe.description,
+        category: recipe.category,
+        vegan: recipe.vegan,
+        cookTime: recipe.cookTime,
+        thumbnail: recipe.thumbnail,
+        origin: recipe.origin,
+        ingredients: ingredientsArray,
+        measures: measuresArray,
+        steps: stepsArray,
+        userId: recipe.userId,
+        createdAt: recipe.createdAt,
+        updatedAt: recipe.updatedAt,
+        deletedAt: recipe.deletedAt
+    }
+}
+
 export const queryAllRecipe = async () => {
     const recipes = await db.recipe.findMany({
         include: {
