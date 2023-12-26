@@ -58,7 +58,7 @@ export const editUser = async (userId: number, data: UserRequest) => {
     })
   
     return user;
-  }
+}
   
 export const removeUser = async (userId: number) => {
     await db.user.delete({

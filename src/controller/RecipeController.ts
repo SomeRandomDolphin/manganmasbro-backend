@@ -46,3 +46,36 @@ export const retrieveAllRecipe = async (req: Request, res: Response) => {
         responseError(res, err)
     }
 }
+
+export const updateRecipe = async (req: Request, res: Response) => {
+    const {
+        error,
+        value,
+    }: {
+        error: Joi.ValidationError
+        value: RecipeRequest
+    } = recipeSchema.validate(req.body, { abortEarly: false })
+  
+    if (error) {
+        responseError(res, error)
+        return;
+    }
+  
+    try {
+        const recipeId = Number(req.params.recipe_id)
+        const updatedRecipe = await RecipeService.updateRecipe(recipeId, value)
+        responseData(res, StatusCodes.OK, "Recipe Updated", updatedRecipe)
+    } catch (err) {
+        responseError(res, err)
+    }
+}
+  
+export const deleteRecipe = async (req: Request, res: Response) => {
+    try {
+        const recipeId = Number(req.params.recipe_id)
+        await RecipeService.deleteRecipe(recipeId)
+        responseData(res, StatusCodes.OK, "Recipe Deleted", undefined)
+    } catch (err) {
+        responseError(res, err)
+    }
+}

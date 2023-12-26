@@ -45,18 +45,18 @@ export const updateUser = async (userId: number, data: UserRequest) => {
     const updatedUser = await editUser(userId, data);
   
     if (!updatedUser) {
-      throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Data");
+      throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Data")
     }
   
-    return updatedUser;
-  };
+    return updatedUser
+}
   
   export const deleteUser = async (userId: number) => {
     const isRegistered = await queryUserDetailbyID(userId);
   
     if (!isRegistered) {
-      throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found");
+      throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
     }
   
-    await removeUser(userId);
-  };
+    await removeUser(userId)
+}
