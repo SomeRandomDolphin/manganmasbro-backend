@@ -5,6 +5,7 @@ import { UserRequest } from "../model/UserModel";
 import { responseData, responseError } from "../Utils/API-Response";
 import { StatusCodes } from "http-status-codes";
 import * as UserService from "../service/UserService"
+import { UserToken } from "../middleware/AuthMiddleware";
 
 export const registerUser = async (req: Request, res: Response) => {    
     const { 
@@ -55,8 +56,8 @@ export const updateUser = async (req: Request, res: Response) => {
     }
 
     try {
-        const userId = Number(req.params.user_id);
-        const updatedUser = await UserService.updateUser(userId, value)
+        const { username } = (req as UserToken).user
+        const updatedUser = await UserService.updateUser(username, value)
         responseData(res, StatusCodes.OK, "User Updated Successfully", updatedUser) 
     } catch (err) {
         responseError(res, err)
@@ -66,8 +67,8 @@ export const updateUser = async (req: Request, res: Response) => {
   
 export const deleteUser = async (req: Request, res: Response) => {
     try {
-        const userId = Number(req.params.user_id)
-        const url = await UserService.deleteUser(userId)
+        const { username } = (req as UserToken).user
+        const url = await UserService.deleteUser(username)
         responseData(res, StatusCodes.OK, "User Deleted Successfully", url)
     } catch (err) {
         responseError(res, err)

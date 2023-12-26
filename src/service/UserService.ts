@@ -38,14 +38,14 @@ export const retrieveUser = async (data: number) => {
     return user
 }
 
-export const updateUser = async (userId: number, data: UserRequest) => {
-    const isRegistered = await queryUserDetailbyID(userId);
+export const updateUser = async (userUsername: string, data: UserRequest) => {
+    const user = await queryUserDetailbyUsername(userUsername)
+
+    if(!user){
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
+    }  
   
-    if (!isRegistered) {
-      throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found");
-    }
-  
-    const updatedUser = await editUser(userId, data);
+    const updatedUser = await editUser(user.id, data);
   
     if (!updatedUser) {
       throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Data")
@@ -54,13 +54,18 @@ export const updateUser = async (userId: number, data: UserRequest) => {
     return updatedUser
 }
   
-  export const deleteUser = async (userId: number) => {
-    const isRegistered = await removeUser(userId);
+  export const deleteUser = async (userUsername: string) => {
+    const user = await queryUserDetailbyUsername(userUsername)
+
+    if(!user){
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
+    }  
+
+    const updatedUser = await removeUser(user.id)
   
-    if (!isRegistered) {
+    if (!updatedUser) {
       throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
     }
   
-    await removeUser(userId)
-    return isRegistered
+    return updatedUser
 }
