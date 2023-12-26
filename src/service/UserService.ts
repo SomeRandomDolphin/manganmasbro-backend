@@ -28,7 +28,7 @@ export const retrieveUser = async (data: number) => {
     const user = await queryUserDetailbyID(data)
 
     if(!user){
-        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid Email")
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Invalid ID")
     }
 
     return user

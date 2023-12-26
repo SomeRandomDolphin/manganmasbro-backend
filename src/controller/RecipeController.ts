@@ -21,7 +21,7 @@ export const createRecipe = async (req: Request, res: Response) => {
     }
 
     try{
-        const recipe = await RecipeService.createRecipe(value)
+        const recipe = await RecipeService.registerRecipe(value)
         responseData(res, StatusCodes.OK, "Recipe Created", recipe)
     } catch(err){
         responseError(res, err)

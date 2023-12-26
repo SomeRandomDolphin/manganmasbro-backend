@@ -3,7 +3,7 @@ import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
 import { createRecipe, queryRecipebyID, queryAllRecipe } from "../repository/RecipeRepository";
 
-export const registerUser = async (data: RecipeRequest) => {    
+export const registerRecipe = async (data: RecipeRequest) => {    
     const recipe = await createRecipe(
         data.id,
         data.name,
