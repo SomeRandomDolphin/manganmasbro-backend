@@ -346,8 +346,7 @@ export const editRecipe = async (recipeId: number, data: RecipeRequest) => {
             vegan: data.vegan,
             cookTime: data.cookTime,
             thumbnail: data.thumbnail,
-            origin: data.origin,
-            userId: data.userId
+            origin: data.origin
         },
     })
   

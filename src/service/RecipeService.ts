@@ -2,11 +2,11 @@
 import { CustomError } from "../Utils/ErrorHandling";
 import { RecipeRequest } from "../model/RecipeModel";
 import { createRecipe, createIngredient, createMeasure, createStep, queryRecipebyID, queryRecipebyUserID, queryAllRecipe, editRecipe, removeRecipe } from "../repository/RecipeRepository";
-import { queryUserDetailbyID, queryUserDetailbyUsername } from "../repository/UserRepository";
+import { queryUserDetailbyUsername } from "../repository/UserRepository";
 
-export const registerRecipe = async (data: RecipeRequest) => {    
-    const isRegistedUser = await queryUserDetailbyID(data.userId)
-    if(!isRegistedUser){
+export const registerRecipe = async (data: RecipeRequest, userUsername: string) => {    
+    const user = await queryUserDetailbyUsername(userUsername)
+    if(!user){
         throw new CustomError(StatusCodes.BAD_REQUEST, "User tidak terdaftar")
     }
 
@@ -87,7 +87,7 @@ export const registerRecipe = async (data: RecipeRequest) => {
         data.cookTime,
         data.thumbnail,
         data.origin,
-        data.userId
+        user.id
     )
 
     if(!ingredient){
@@ -143,11 +143,21 @@ export const retrieveUserRecipe = async (userUsername: string) => {
     return recipe
 }
 
-export const updateRecipe = async (recipeId: number, data: RecipeRequest) => {
+export const updateRecipe = async (recipeId: number, data: RecipeRequest, userUsername: string) => {
+    const user = await queryUserDetailbyUsername(userUsername)
+
+    if(!user){
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
+    }  
+
     const isRegistered = await queryRecipebyID(recipeId);
   
     if (!isRegistered) {
         throw new CustomError(StatusCodes.NOT_FOUND, "Recipe Not Found")
+    }
+
+    if (isRegistered.userId != user.id) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Mismatch")
     }
   
     const updatedRecipe = await editRecipe(recipeId, data)
@@ -159,13 +169,28 @@ export const updateRecipe = async (recipeId: number, data: RecipeRequest) => {
     return updatedRecipe;
 }
   
-export const deleteRecipe = async (recipeId: number) => {
-    const isRegistered = await removeRecipe(recipeId);
+export const deleteRecipe = async (recipeId: number, userUsername: string) => {
+    const user = await queryUserDetailbyUsername(userUsername)
+
+    if(!user){
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Not Found")
+    }  
+
+    const isRegistered = await queryRecipebyID(recipeId);
   
     if (!isRegistered) {
         throw new CustomError(StatusCodes.NOT_FOUND, "Recipe Not Found")
     }
+    
+    if (isRegistered.userId != user.id) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "User Mismatch")
+    }
+
+    const updatedRecipe = await removeRecipe(recipeId);
   
-    await removeRecipe(recipeId)
-    return isRegistered
+    if (!updatedRecipe) {
+        throw new CustomError(StatusCodes.NOT_FOUND, "Recipe Not Found")
+    }
+    
+    return updatedRecipe
 }

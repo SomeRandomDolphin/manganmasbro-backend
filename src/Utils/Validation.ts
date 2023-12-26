@@ -79,5 +79,4 @@ export const recipeSchema = Joi.object({
     step18: Joi.string().allow(null),
     step19: Joi.string().allow(null),
     step20: Joi.string().allow(null),
-    userId: Joi.number().integer().required(),
 })

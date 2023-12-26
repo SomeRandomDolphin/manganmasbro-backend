@@ -4,11 +4,11 @@ import { userAuthMiddleware } from "../middleware/AuthMiddleware"
 
 const recipeRouter = Router()
 
-recipeRouter.post("/create", createRecipe)
+recipeRouter.post("/create", userAuthMiddleware, createRecipe)
 recipeRouter.get("", retrieveAllRecipe)
 recipeRouter.get("/me", userAuthMiddleware,  retrieveUserRecipe)
-recipeRouter.put("/update/:recipe_id", updateRecipe)
-recipeRouter.delete("/delete/:recipe_id", deleteRecipe)
+recipeRouter.put("/update/:recipe_id", userAuthMiddleware, updateRecipe)
+recipeRouter.delete("/delete/:recipe_id", userAuthMiddleware, deleteRecipe)
 recipeRouter.get("/:recipe_id", retrieveRecipe)
 
 export default recipeRouter

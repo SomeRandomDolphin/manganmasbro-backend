@@ -68,5 +68,4 @@ export interface RecipeRequest {
     step18: string
     step19: string
     step20: string
-    userId: number
 }

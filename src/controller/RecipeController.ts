@@ -22,7 +22,8 @@ export const createRecipe = async (req: Request, res: Response) => {
     }
 
     try{
-        const recipe = await RecipeService.registerRecipe(value)
+        const { username } = (req as UserToken).user
+        const recipe = await RecipeService.registerRecipe(value, username)
         responseData(res, StatusCodes.OK, "Recipe Created", recipe)
     } catch(err){
         responseError(res, err)
@@ -74,8 +75,9 @@ export const updateRecipe = async (req: Request, res: Response) => {
     }
   
     try {
+        const { username } = (req as UserToken).user
         const recipeId = Number(req.params.recipe_id)
-        const updatedRecipe = await RecipeService.updateRecipe(recipeId, value)
+        const updatedRecipe = await RecipeService.updateRecipe(recipeId, value, username)
         responseData(res, StatusCodes.OK, "Recipe Updated", updatedRecipe)
     } catch (err) {
         responseError(res, err)
@@ -84,8 +86,9 @@ export const updateRecipe = async (req: Request, res: Response) => {
   
 export const deleteRecipe = async (req: Request, res: Response) => {
     try {
+        const { username } = (req as UserToken).user
         const recipeId = Number(req.params.recipe_id)
-        const url = await RecipeService.deleteRecipe(recipeId)
+        const url = await RecipeService.deleteRecipe(recipeId, username)
         responseData(res, StatusCodes.OK, "Recipe Deleted", url)
     } catch (err) {
         responseError(res, err)
