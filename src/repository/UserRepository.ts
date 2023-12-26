@@ -4,14 +4,12 @@ import env from "../config/LoacEnv";
 import { UserRequest } from "../model/UserModel"; 
 
 export const createUser = async (
-    idInput: number,
     usernameInput: string, 
     emailInput: string, 
     passwordInput: string,
 ) => {
     const user = await db.user.create({
         data: {
-            id: idInput,
             username: usernameInput,
             email: emailInput,
             password: bcrypt.hashSync(passwordInput, env.HASH_SALT),
@@ -33,6 +31,42 @@ export const queryUserDetailbyID = async (idInput: number) => {
     const data = await db.user.findUnique({
         where: {
             id: idInput
+        },
+        select: {
+            id: true,
+            username: true,
+            email: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true
+        },
+    })
+
+    return data
+}
+
+export const queryUserDetailbyUsername = async (usernameInput: string) => {
+    const data = await db.user.findFirst({
+        where: {
+            username: usernameInput
+        },
+        select: {
+            id: true,
+            username: true,
+            email: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true
+        },
+    })
+
+    return data
+}
+
+export const queryUserDetailbyEmail = async (emailInput: string) => {
+    const data = await db.user.findFirst({
+        where: {
+            email: emailInput
         },
         select: {
             id: true,

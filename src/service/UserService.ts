@@ -1,18 +1,21 @@
 import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../Utils/ErrorHandling";
 import { UserRequest } from "../model/UserModel";
-import { createUser, queryUserDetailbyID, editUser, removeUser } from "../repository/UserRepository";
+import { createUser, queryUserDetailbyID, queryUserDetailbyUsername, queryUserDetailbyEmail, editUser, removeUser } from "../repository/UserRepository";
 
 
 export const registerUser = async (data: UserRequest) => {  
-    const isRegisted = await queryUserDetailbyID(data.id)
+    const isRegistedUsername = await queryUserDetailbyUsername(data.username)
+    if(isRegistedUsername){
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Username telah terdaftar")
+    }
 
-    if(isRegisted){
-        throw new CustomError(StatusCodes.BAD_REQUEST, "ID telah terdaftar")
+    const isRegisteredEmail = await queryUserDetailbyEmail(data.email)
+    if(isRegisteredEmail){
+        throw new CustomError(StatusCodes.BAD_REQUEST, "Email telah terdaftar")
     }
 
     const user = await createUser(
-        data.id,
         data.username, 
         data.email, 
         data.password,
